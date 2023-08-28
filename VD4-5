@@ -1,0 +1,116 @@
+using System;
+
+class nguoi
+{
+    public string firstName { get; set; }
+    public DateTime BirthDate { get; set; }
+
+    public int tinhtuoi()
+    {
+        DateTime currentDate = DateTime.Today;
+        int tuoi = currentDate.Year - BirthDate.Year;
+
+        if (currentDate.Month < BirthDate.Month || (currentDate.Month == BirthDate.Month && currentDate.Day < BirthDate.Day))
+        {
+            tuoi--;
+        }
+
+        return tuoi;
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Vui long nhap ten cua ban: ");
+        string firstName = Console.ReadLine();
+
+        Console.Write("nhap nam sinh: ");
+        int namsinh = int.Parse(Console.ReadLine());
+
+        Console.Write("nhap thang sinh: ");
+        int thangsinh = int.Parse(Console.ReadLine());
+
+        Console.Write("nhap ngay sinh: ");
+        int ns = int.Parse(Console.ReadLine());
+
+        nguoi nguoi = new nguoi
+        {
+            firstName = firstName,
+            BirthDate = new DateTime(namsinh, thangsinh, ns)
+        };
+
+        int tinhtuoi = nguoi.tinhtuoi();
+        Console.WriteLine($"Tuoi {nguoi.firstName} la {ns}");
+    }
+}
+VD ngan hang
+using System;
+
+class taikhoan
+{
+    public string stk { get; private set; }
+    public string tentk { get; set; }
+    public decimal sd { get; private set; }
+
+    public taikhoan(string stk, string tentk, decimal sd)
+    {
+        stk = stk;
+        tentk = tentk;
+        sd = sd;
+    }
+
+    public void ck(decimal sotien)
+    {
+        if (sotien > 0)
+        {
+            sd += sotien;
+            Console.WriteLine($"So tien vua vao {sotien:C} tai khoan {stk}. So du moi: {sd:C}");
+        }
+        else
+        {
+            Console.WriteLine("Số tiền gửi không hợp lệ.");
+        }
+    }
+
+    public void tienrut(decimal sotien)
+    {
+        if (sotien > 0 && sotien   <= sd)
+        {
+            sd -= sotien;
+            Console.WriteLine($"Rut tien {sotien:C} tu tai khoan {stk}. So du moi: {sd:C}");
+        }
+        else
+        {
+            Console.WriteLine("Khong du so tien hoac luong tien can giao dich.");
+        }
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Vui long nhap stk: ");
+        string stk = Console.ReadLine();
+
+        Console.Write("Nhap ten tai khoan: ");
+        string tentk = Console.ReadLine();
+
+        Console.Write("nhap so tien: ");
+        decimal sd = decimal.Parse(Console.ReadLine());
+
+        taikhoan taikhoan = new taikhoan(stk, tentk, sd);
+
+        Console.WriteLine($"Chu tai khoan: {taikhoan.tentk}, So du: {taikhoan.sd:C}");
+
+        Console.Write("Nhap so tien can chuyen khoan: ");
+        decimal ck = decimal.Parse(Console.ReadLine());
+        taikhoan.ck(ck);
+
+        Console.Write("Nhap so tien rut ra tien mat: ");
+        decimal sotienrut = decimal.Parse(Console.ReadLine());
+        taikhoan.tienrut(sotienrut);
+    }
+}
